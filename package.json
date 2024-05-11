@@ -2,12 +2,12 @@
   "name": "canvas-editor-vue",
   "version": "0.0.1",
   "type": "module",
-  "main": "./dist/canvas-editor-vue.js", 
-  "module": "./dist/canvas-editor-vue.js", 
-  "types": "./dist/index.d.ts", 
+  "main": "./dist/canvas-editor-vue.js",
+  "module": "./dist/canvas-editor-vue.js",
+  "types": "./dist/index.d.ts",
   "files": [
-  "dist"
-],
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -15,11 +15,14 @@
   },
   "dependencies": {
     "@hufe921/canvas-editor": "^0.9.74",
+    "naive-ui": "^2.38.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@vicons/fluent": "^0.12.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "less": "^4.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.9.0",
