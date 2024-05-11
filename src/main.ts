@@ -1,3 +1,4 @@
+import EditorIcon from "@/components/EditorIcon/index.vue";
 import { createApp } from "vue";
 import {
   // create naive ui
@@ -30,4 +31,5 @@ const naive = create({
 
 const app = createApp(App);
 app.use(naive);
+app.component("EditorIcon", EditorIcon);
 app.mount("#app");

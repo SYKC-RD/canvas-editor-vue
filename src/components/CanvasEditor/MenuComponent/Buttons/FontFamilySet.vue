@@ -74,7 +74,7 @@ const options = [
   },
 ];
 
-const UpdateFontFamily = (i: any) => {
+const editor = (i: any) => {
   instance.value.value.command.executeFont(i);
 };
 </script>
@@ -83,7 +83,7 @@ const UpdateFontFamily = (i: any) => {
     class="myselect"
     v-model:value="value"
     :options="options"
-    @update:value="UpdateFontFamily(value)"
+    @update:value="editor(value)"
   />
 </template>
 <style lang="less">
@@ -99,36 +99,24 @@ const UpdateFontFamily = (i: any) => {
       border: 0px solid #f2f4f7;
     }
 
-    .n-base-loading {
-      width: 10px;
-      color: black;
-    }
-
     .n-base-suffix__arrow {
       left: 0px;
       width: auto;
       color: black;
-      font-size: 12px;
+      font-size: 10px;
     }
 
     .n-base-selection-label {
       height: 20px;
       background-color: #f2f4f7;
-      font-size: 14px;
+    }
+
+    .n-base-selection-input__content {
+      font-size: 12px;
     }
   }
 
   .n-base-selection:hover {
-    .n-base-selection__state-border {
-      border: 0px solid #f2f4f7;
-    }
-  }
-
-  .n-base-selection--selected {
-    --n-border-active: 0px solid #f2f4f7;
-  }
-
-  .n-base-selection__state-border:focus {
     .n-base-selection__state-border {
       border: 0px solid #f2f4f7;
     }

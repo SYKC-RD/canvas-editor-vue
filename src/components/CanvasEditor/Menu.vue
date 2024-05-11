@@ -6,6 +6,11 @@ import Eraser24Regular from "./MenuComponent/Buttons/Eraser24Regular.vue";
 import Search20Filled from "./MenuComponent/Buttons/Search20Filled.vue";
 import Print20Regular from "./MenuComponent/Buttons/Print20Regular.vue";
 import FontFamilySet from "./MenuComponent/Buttons/FontFamilySet.vue";
+import FontSizeSet from "./MenuComponent/Buttons/FontSizeSet.vue";
+import FontIncrease24Regular from "./MenuComponent/Buttons/FontIncrease24Regular.vue";
+import FontDecrease24Regular from "./MenuComponent/Buttons/FontDecrease24Regular.vue";
+// import TextBold24Regular from "./MenuComponent/Buttons/TextBold24Regular.vue";
+import { TextBold24Regular } from "@vicons/fluent";
 </script>
 
 <template>
@@ -17,7 +22,12 @@ import FontFamilySet from "./MenuComponent/Buttons/FontFamilySet.vue";
       <Eraser24Regular />
     </n-col>
     <n-col :span="8" style="text-align: left">
-      <FontFamilySet />
+      <FontFamilySet style="display: inline-block" />
+      <FontSizeSet style="display: inline-block" />
+      <FontIncrease24Regular />
+      <FontDecrease24Regular />
+      <!-- <TextBold24Regular /> -->
+      <EditorIcon :iconProps="TextBold24Regular" />
     </n-col>
     <n-col :span="4" style="text-align: left"> </n-col>
     <n-col :span="8" style="text-align: left"> </n-col>
