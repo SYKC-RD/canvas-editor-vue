@@ -25,9 +25,17 @@ import {
   Image24Regular,
   Link24Regular,
   LineStyle24Regular,
-  DocumentOnePage24Regular,
+  Xray24Regular,
   Code24Regular,
-  DocumentPageBreak24Regular,
+  DocumentText24Regular,
+  ControlButton24Regular,
+  CheckboxChecked24Regular,
+  RadioButton24Filled,
+  BracesVariable24Regular,
+  Timer24Regular,
+  Organization24Regular,
+  Search24Regular,
+  Print24Regular,
 } from "@vicons/fluent";
 
 import { ref, inject } from "vue";
@@ -67,113 +75,121 @@ const TextSubscript = () => {
 <template>
   <n-row gutter="1">
     <n-col :span="2">
-      <EditorIcon :iconProps="ArrowReply16Regular" @editor="FontIncrease()" />
-      <EditorIcon :iconProps="ArrowForward16Regular" @editor="FontIncrease()" />
-      <EditorIcon :iconProps="PaintBrush24Regular" @editor="FontIncrease()" />
-      <EditorIcon :iconProps="Eraser24Regular" @editor="FontIncrease()" />
+      <n-space :size="4" wrap="false">
+        <EditorIcon :iconProps="ArrowReply16Regular" @editor="FontIncrease()" />
+        <EditorIcon
+          :iconProps="ArrowForward16Regular"
+          @editor="FontIncrease()"
+        />
+        <EditorIcon :iconProps="PaintBrush24Regular" @editor="FontIncrease()" />
+        <EditorIcon :iconProps="Eraser24Regular" @editor="FontIncrease()" />
+      </n-space>
     </n-col>
     <n-col :span="9" style="text-align: left">
-      <FontFamilySet style="display: inline-block" />
-      <FontSizeSet style="display: inline-block" />
-      <EditorIcon :iconProps="FontIncrease24Regular" @editor="FontIncrease()" />
-      <EditorIcon :iconProps="FontDecrease24Regular" @editor="FontDecrease()" />
-      <EditorIcon :iconProps="TextBold24Regular" @editor="TextBold()" />
-      <EditorIcon
-        :iconProps="TextItalic24Regular"
-        @editor="TextItalic()"
-        style="display: inline-block"
-      />
-      <FontSizeSet style="display: inline-block" />
-      <EditorIcon
-        :iconProps="TextStrikethrough24Regular"
-        @editor="TextStrike()"
-      />
-      <EditorIcon
-        :iconProps="TextSuperscript24Regular"
-        @editor="TextSuperscript()"
-      />
-      <EditorIcon
-        :iconProps="TextSubscript24Regular"
-        @editor="TextSubscript()"
-      />
-      <FontColorSet />
-      <FontHighlightSet />
+      <n-space :size="3" wrap="false">
+        <FontFamilySet style="display: inline-block" />
+        <FontSizeSet style="display: inline-block" />
+        <EditorIcon
+          :iconProps="FontIncrease24Regular"
+          @editor="FontIncrease()"
+        />
+        <EditorIcon
+          :iconProps="FontDecrease24Regular"
+          @editor="FontDecrease()"
+        />
+        <EditorIcon :iconProps="TextBold24Regular" @editor="TextBold()" />
+        <EditorIcon
+          :iconProps="TextItalic24Regular"
+          @editor="TextItalic()"
+          style="display: inline-block"
+        />
+        <FontSizeSet style="display: inline-block" />
+        <EditorIcon
+          :iconProps="TextStrikethrough24Regular"
+          @editor="TextStrike()"
+        />
+        <EditorIcon
+          :iconProps="TextSuperscript24Regular"
+          @editor="TextSuperscript()"
+        />
+        <EditorIcon
+          :iconProps="TextSubscript24Regular"
+          @editor="TextSubscript()"
+        />
+        <FontColorSet />
+        <FontHighlightSet />
+      </n-space>
     </n-col>
-    <n-col :span="4" style="text-align: left">
-      <FontSizeSet style="display: inline-block" />
-      <EditorIcon
-        :iconProps="TextAlignLeft24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextAlignCenter24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextAlignRight24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextAlignJustify24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextLineSpacing24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
+    <n-col :span="5" style="text-align: left">
+      <n-space :size="3" wrap="false">
+        <FontSizeSet style="display: inline-block" />
+        <EditorIcon
+          :iconProps="TextAlignLeft24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="TextAlignCenter24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="TextAlignRight24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="TextAlignJustify24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="TextLineSpacing24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="TextNumberListLtr24Regular"
+          @editor="TextSubscript()"
+        />
+      </n-space>
     </n-col>
-    <n-col :span="8" style="text-align: left">
-      <EditorIcon :iconProps="Table24Regular" @editor="TextSubscript()" />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
-      <EditorIcon
-        :iconProps="TextNumberListLtr24Regular"
-        @editor="TextSubscript()"
-      />
+    <n-col :span="7" style="text-align: left">
+      <n-space :size="4" wrap="false">
+        <EditorIcon :iconProps="Table24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="Image24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="Link24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="LineStyle24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="Xray24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="Code24Regular" @editor="TextSubscript()" />
+        <EditorIcon
+          :iconProps="DocumentText24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="ControlButton24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="CheckboxChecked24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="RadioButton24Filled"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon
+          :iconProps="BracesVariable24Regular"
+          @editor="TextSubscript()"
+        />
+        <EditorIcon :iconProps="Timer24Regular" @editor="TextSubscript()" />
+        <EditorIcon
+          :iconProps="Organization24Regular"
+          @editor="TextSubscript()"
+        />
+      </n-space>
     </n-col>
-    <n-col :span="1" style="text-align: left"> </n-col>
+    <n-col :span="1" style="text-align: left">
+      <n-space :size="4" wrap="false">
+        <EditorIcon :iconProps="Search24Regular" @editor="TextSubscript()" />
+        <EditorIcon :iconProps="Print24Regular" @editor="TextSubscript()" />
+      </n-space>
+    </n-col>
   </n-row>
   <div class="menu" editor-component="menu">
     <div class="menu-item">
