@@ -76,7 +76,7 @@ const editor = (i: any) => {
 </script>
 <template>
   <n-select
-    class="myselect"
+    class="font-size-select"
     v-model:value="value"
     :options="options"
     @update:value="editor(value)"
