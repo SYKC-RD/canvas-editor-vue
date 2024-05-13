@@ -12,6 +12,7 @@ import {
   NSpace,
   NDivider,
   NSelect,
+  NColorPicker,
 } from "naive-ui";
 import "./style.css";
 import App from "./App.vue";
@@ -26,10 +27,12 @@ const naive = create({
     NIconWrapper,
     NDivider,
     NSelect,
+    NColorPicker,
   ],
 });
 
 const app = createApp(App);
+app.config.globalProperties.editorInstance = null;
 app.use(naive);
 app.component("EditorIcon", EditorIcon);
 app.mount("#app");

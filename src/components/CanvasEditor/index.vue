@@ -9,7 +9,7 @@
 import Editor from "@hufe921/canvas-editor";
 import Menu from "./Menu.vue";
 
-import { ref, onMounted, provide } from "vue";
+import { ref, onMounted, provide, getCurrentInstance } from "vue";
 
 const canvasEditorRef = ref();
 const instance = ref();
@@ -23,6 +23,7 @@ onMounted(() => {
         },
       ],
     });
+
     console.log(instance);
   }
 });

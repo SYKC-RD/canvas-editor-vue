@@ -1,40 +1,179 @@
 <script setup lang="ts">
-import ArrowReply16Regular from "./MenuComponent/Buttons/ArrowReply16Regular.vue";
-import ArrowForward16Regular from "./MenuComponent/Buttons/ArrowForward16Regular.vue";
-import PaintBrush24Regular from "./MenuComponent/Buttons/PaintBrush24Regular.vue";
-import Eraser24Regular from "./MenuComponent/Buttons/Eraser24Regular.vue";
-import Search20Filled from "./MenuComponent/Buttons/Search20Filled.vue";
-import Print20Regular from "./MenuComponent/Buttons/Print20Regular.vue";
-import FontFamilySet from "./MenuComponent/Buttons/FontFamilySet.vue";
-import FontSizeSet from "./MenuComponent/Buttons/FontSizeSet.vue";
-import FontIncrease24Regular from "./MenuComponent/Buttons/FontIncrease24Regular.vue";
-import FontDecrease24Regular from "./MenuComponent/Buttons/FontDecrease24Regular.vue";
-// import TextBold24Regular from "./MenuComponent/Buttons/TextBold24Regular.vue";
-import { TextBold24Regular } from "@vicons/fluent";
+import FontFamilySet from "./MenuComponent/Selects/FontFamilySet.vue";
+import FontSizeSet from "./MenuComponent/Selects/FontSizeSet.vue";
+import FontColorSet from "./MenuComponent/Selects/FontColorSet.vue";
+import FontHighlightSet from "./MenuComponent/Selects/FontHighlightSet.vue";
+import {
+  ArrowReply16Regular,
+  ArrowForward16Regular,
+  PaintBrush24Regular,
+  Eraser24Regular,
+  FontIncrease24Regular,
+  FontDecrease24Regular,
+  TextBold24Regular,
+  TextItalic24Regular,
+  TextStrikethrough24Regular,
+  TextSuperscript24Regular,
+  TextSubscript24Regular,
+  TextAlignLeft24Regular,
+  TextAlignCenter24Regular,
+  TextAlignRight24Regular,
+  TextAlignJustify24Regular,
+  TextLineSpacing24Regular,
+  TextNumberListLtr24Regular,
+  Table24Regular,
+  Image24Regular,
+  Link24Regular,
+  LineStyle24Regular,
+  DocumentOnePage24Regular,
+  Code24Regular,
+  DocumentPageBreak24Regular,
+} from "@vicons/fluent";
+
+import { ref, inject } from "vue";
+// 注入全局instance
+const instance = ref();
+instance.value = inject("instance");
+
+const FontIncrease = () => {
+  instance.value.value.command.executeSizeAdd();
+};
+
+const FontDecrease = () => {
+  instance.value.value.command.executeSizeMinus();
+};
+
+const TextBold = () => {
+  instance.value.value.command.executeBold();
+};
+
+const TextItalic = () => {
+  instance.value.value.command.executeItalic();
+};
+
+const TextStrike = () => {
+  instance.value.value.command.executeStrikeout();
+};
+
+const TextSuperscript = () => {
+  instance.value.value.command.executeSuperscript();
+};
+
+const TextSubscript = () => {
+  instance.value.value.command.executeSubscript();
+};
 </script>
 
 <template>
   <n-row gutter="1">
-    <n-col :span="3">
-      <ArrowReply16Regular />
-      <ArrowForward16Regular />
-      <PaintBrush24Regular />
-      <Eraser24Regular />
+    <n-col :span="2">
+      <EditorIcon :iconProps="ArrowReply16Regular" @editor="FontIncrease()" />
+      <EditorIcon :iconProps="ArrowForward16Regular" @editor="FontIncrease()" />
+      <EditorIcon :iconProps="PaintBrush24Regular" @editor="FontIncrease()" />
+      <EditorIcon :iconProps="Eraser24Regular" @editor="FontIncrease()" />
     </n-col>
-    <n-col :span="8" style="text-align: left">
+    <n-col :span="9" style="text-align: left">
       <FontFamilySet style="display: inline-block" />
       <FontSizeSet style="display: inline-block" />
-      <FontIncrease24Regular />
-      <FontDecrease24Regular />
-      <!-- <TextBold24Regular /> -->
-      <EditorIcon :iconProps="TextBold24Regular" />
+      <EditorIcon :iconProps="FontIncrease24Regular" @editor="FontIncrease()" />
+      <EditorIcon :iconProps="FontDecrease24Regular" @editor="FontDecrease()" />
+      <EditorIcon :iconProps="TextBold24Regular" @editor="TextBold()" />
+      <EditorIcon
+        :iconProps="TextItalic24Regular"
+        @editor="TextItalic()"
+        style="display: inline-block"
+      />
+      <FontSizeSet style="display: inline-block" />
+      <EditorIcon
+        :iconProps="TextStrikethrough24Regular"
+        @editor="TextStrike()"
+      />
+      <EditorIcon
+        :iconProps="TextSuperscript24Regular"
+        @editor="TextSuperscript()"
+      />
+      <EditorIcon
+        :iconProps="TextSubscript24Regular"
+        @editor="TextSubscript()"
+      />
+      <FontColorSet />
+      <FontHighlightSet />
     </n-col>
-    <n-col :span="4" style="text-align: left"> </n-col>
-    <n-col :span="8" style="text-align: left"> </n-col>
-    <n-col :span="1" style="text-align: left">
-      <Search20Filled />
-      <Print20Regular />
+    <n-col :span="4" style="text-align: left">
+      <FontSizeSet style="display: inline-block" />
+      <EditorIcon
+        :iconProps="TextAlignLeft24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextAlignCenter24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextAlignRight24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextAlignJustify24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextLineSpacing24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
     </n-col>
+    <n-col :span="8" style="text-align: left">
+      <EditorIcon :iconProps="Table24Regular" @editor="TextSubscript()" />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+      <EditorIcon
+        :iconProps="TextNumberListLtr24Regular"
+        @editor="TextSubscript()"
+      />
+    </n-col>
+    <n-col :span="1" style="text-align: left"> </n-col>
   </n-row>
   <div class="menu" editor-component="menu">
     <div class="menu-item">

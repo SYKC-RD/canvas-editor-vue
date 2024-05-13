@@ -12,13 +12,14 @@ const leavecolor = () => {
   hovercolor.value = false;
 };
 
+const props = defineProps({ iconProps: Object });
+const iconProps = computed(() => props.iconProps);
+
+let $emit = defineEmits(["editor"]);
 // icon所对应的方法
 const editor = () => {
-  instance.value.value.command.executeSizeAdd();
+  $emit("editor");
 };
-
-const props = defineProps({ iconProps: String });
-const iconProps = computed(() => props.iconProps);
 </script>
 <template>
   <n-icon-wrapper
