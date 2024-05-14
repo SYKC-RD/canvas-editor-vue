@@ -1,5 +1,38 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import EditorIcon from "@/components/EditorIcon/index.vue";
+import { createApp } from "vue";
+import {
+  // create naive ui
+  create,
+  // component
+  NButton,
+  NIcon,
+  NIconWrapper,
+  NRow,
+  NCol,
+  NSpace,
+  NDivider,
+  NSelect,
+  NColorPicker,
+} from "naive-ui";
+import "./style.css";
+import App from "./App.vue";
 
-createApp(App).mount('#app')
+const naive = create({
+  components: [
+    NButton,
+    NIcon,
+    NRow,
+    NCol,
+    NSpace,
+    NIconWrapper,
+    NDivider,
+    NSelect,
+    NColorPicker,
+  ],
+});
+
+const app = createApp(App);
+app.config.globalProperties.editorInstance = null;
+app.use(naive);
+app.component("EditorIcon", EditorIcon);
+app.mount("#app");
