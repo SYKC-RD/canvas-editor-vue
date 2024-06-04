@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { TextEffects24Filled } from "@vicons/fluent";
-import { ref } from "vue";
+import { ref, inject } from "vue";
+const instance = ref();
+instance.value = inject("instance");
 // 设置鼠标悬停样式
 const hovercolor = ref(false);
+
 const overcolor = () => {
   hovercolor.value = true;
 };
 const leavecolor = () => {
   hovercolor.value = false;
+};
+
+// 改变字体颜色
+const changeColor = (i: any) => {
+  instance.value.value.command.executeColor(i);
 };
 </script>
 <template>
@@ -19,7 +27,7 @@ const leavecolor = () => {
     @mouseleave="leavecolor()"
     style="position: relative; display: inline-block"
   >
-    <n-color-picker class="mycolor" size="small" />
+    <n-color-picker class="mycolor" size="small" @complete="changeColor" />
     <n-icon class="mycoloricon" size="16" :component="TextEffects24Filled" />
   </n-icon-wrapper>
 </template>

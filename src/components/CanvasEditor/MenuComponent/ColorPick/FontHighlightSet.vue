@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { TextClearFormatting20Filled } from "@vicons/fluent";
-import { ref } from "vue";
+import { ref, inject } from "vue";
+const instance = ref();
+instance.value = inject("instance");
+
 // 设置鼠标悬停样式
 const hovercolor = ref(false);
 const overcolor = () => {
@@ -8,6 +11,11 @@ const overcolor = () => {
 };
 const leavecolor = () => {
   hovercolor.value = false;
+};
+
+// 改变高亮颜色
+const changeColor = (i: any) => {
+  instance.value.value.command.executeHighlight(i);
 };
 </script>
 <template>
@@ -30,6 +38,7 @@ const leavecolor = () => {
         '#F0A020',
         'rgba(208, 48, 80, 1)',
       ]"
+      @complete="changeColor"
     />
     <n-icon
       class="mycoloricon"

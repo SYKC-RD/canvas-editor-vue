@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { RowFlex } from "./MenuComponent/editor";
 import FontFamilySet from "./MenuComponent/Selects/FontFamilySet.vue";
 import FontSizeSet from "./MenuComponent/Selects/FontSizeSet.vue";
-import FontColorSet from "./MenuComponent/Selects/FontColorSet.vue";
-import FontHighlightSet from "./MenuComponent/Selects/FontHighlightSet.vue";
+import UnderlineSet from "./MenuComponent/Selects/UnderlineSet.vue";
+import FontColorSet from "./MenuComponent/ColorPick/FontColorSet.vue";
+import FontHighlightSet from "./MenuComponent/ColorPick/FontHighlightSet.vue";
+import RowSpace from "./MenuComponent/Icons/RowSpace.vue";
+import ListNumber from "./MenuComponent/Icons/ListNumber.vue";
+import AddTable from "./MenuComponent/Table/AddTable.vue";
+import AddImage from "./MenuComponent/Icons/AddImage.vue";
 import {
   ArrowReply16Regular,
   ArrowForward16Regular,
@@ -36,53 +42,35 @@ import {
   Organization24Regular,
   Search24Regular,
   Print24Regular,
+  TextAlignDistributedEvenly24Regular,
 } from "@vicons/fluent";
 
 import { ref, inject } from "vue";
 // 注入全局instance
 const instance = ref();
 instance.value = inject("instance");
-
-const FontIncrease = () => {
-  instance.value.value.command.executeSizeAdd();
-};
-
-const FontDecrease = () => {
-  instance.value.value.command.executeSizeMinus();
-};
-
-const TextBold = () => {
-  instance.value.value.command.executeBold();
-};
-
-const TextItalic = () => {
-  instance.value.value.command.executeItalic();
-};
-
-const TextStrike = () => {
-  instance.value.value.command.executeStrikeout();
-};
-
-const TextSuperscript = () => {
-  instance.value.value.command.executeSuperscript();
-};
-
-const TextSubscript = () => {
-  instance.value.value.command.executeSubscript();
-};
 </script>
 
 <template>
   <n-row gutter="1">
     <n-col :span="2">
       <n-space :size="4" wrap="false">
-        <EditorIcon :iconProps="ArrowReply16Regular" @editor="FontIncrease()" />
+        <EditorIcon
+          :iconProps="ArrowReply16Regular"
+          @editor="instance.value.command.executeUndo()"
+        />
         <EditorIcon
           :iconProps="ArrowForward16Regular"
-          @editor="FontIncrease()"
+          @editor="instance.value.command.executeRedo()"
         />
-        <EditorIcon :iconProps="PaintBrush24Regular" @editor="FontIncrease()" />
-        <EditorIcon :iconProps="Eraser24Regular" @editor="FontIncrease()" />
+        <EditorIcon
+          :iconProps="PaintBrush24Regular"
+          @editor="instance.value.command.executeStrikeout()"
+        />
+        <EditorIcon
+          :iconProps="Eraser24Regular"
+          @editor="instance.value.command.executeFormat()"
+        />
       </n-space>
     </n-col>
     <n-col :span="9" style="text-align: left">
@@ -91,30 +79,32 @@ const TextSubscript = () => {
         <FontSizeSet style="display: inline-block" />
         <EditorIcon
           :iconProps="FontIncrease24Regular"
-          @editor="FontIncrease()"
+          @editor="instance.value.command.executeSizeAdd()"
         />
         <EditorIcon
           :iconProps="FontDecrease24Regular"
-          @editor="FontDecrease()"
+          @editor="instance.value.command.executeSizeMinus()"
         />
-        <EditorIcon :iconProps="TextBold24Regular" @editor="TextBold()" />
+        <EditorIcon
+          :iconProps="TextBold24Regular"
+          @editor="instance.value.command.executeBold()"
+        />
         <EditorIcon
           :iconProps="TextItalic24Regular"
-          @editor="TextItalic()"
-          style="display: inline-block"
+          @editor="instance.value.command.executeItalic()"
         />
-        <FontSizeSet style="display: inline-block" />
+        <UnderlineSet style="display: inline-block" />
         <EditorIcon
           :iconProps="TextStrikethrough24Regular"
-          @editor="TextStrike()"
+          @editor="instance.value.command.executeStrikeout()"
         />
         <EditorIcon
           :iconProps="TextSuperscript24Regular"
-          @editor="TextSuperscript()"
+          @editor="instance.value.command.executeSuperscript()"
         />
         <EditorIcon
           :iconProps="TextSubscript24Regular"
-          @editor="TextSubscript()"
+          @editor="instance.value.command.executeSubscript()"
         />
         <FontColorSet />
         <FontHighlightSet />
@@ -122,37 +112,35 @@ const TextSubscript = () => {
     </n-col>
     <n-col :span="5" style="text-align: left">
       <n-space :size="3" wrap="false">
-        <FontSizeSet style="display: inline-block" />
+        <UnderlineSet style="display: inline-block" />
         <EditorIcon
           :iconProps="TextAlignLeft24Regular"
-          @editor="TextSubscript()"
+          @editor="instance.value.command.executeRowFlex(RowFlex.LEFT)"
         />
         <EditorIcon
           :iconProps="TextAlignCenter24Regular"
-          @editor="TextSubscript()"
+          @editor="instance.value.command.executeRowFlex(RowFlex.CENTER)"
         />
         <EditorIcon
           :iconProps="TextAlignRight24Regular"
-          @editor="TextSubscript()"
+          @editor="instance.value.command.executeRowFlex(RowFlex.RIGHT)"
         />
         <EditorIcon
           :iconProps="TextAlignJustify24Regular"
-          @editor="TextSubscript()"
+          @editor="instance.value.command.executeRowFlex(RowFlex.ALIGNMENT)"
         />
         <EditorIcon
-          :iconProps="TextLineSpacing24Regular"
-          @editor="TextSubscript()"
+          :iconProps="TextAlignDistributedEvenly24Regular"
+          @editor="instance.value.command.executeRowFlex(RowFlex.JUSTIFY)"
         />
-        <EditorIcon
-          :iconProps="TextNumberListLtr24Regular"
-          @editor="TextSubscript()"
-        />
+        <RowSpace />
+        <ListNumber />
       </n-space>
     </n-col>
     <n-col :span="7" style="text-align: left">
       <n-space :size="4" wrap="false">
-        <EditorIcon :iconProps="Table24Regular" @editor="TextSubscript()" />
-        <EditorIcon :iconProps="Image24Regular" @editor="TextSubscript()" />
+        <AddTable />
+        <AddImage />
         <EditorIcon :iconProps="Link24Regular" @editor="TextSubscript()" />
         <EditorIcon :iconProps="LineStyle24Regular" @editor="TextSubscript()" />
         <EditorIcon :iconProps="Xray24Regular" @editor="TextSubscript()" />
