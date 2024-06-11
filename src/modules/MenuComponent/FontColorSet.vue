@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { TextClearFormatting20Filled } from "@vicons/fluent";
+import { TextEffects24Filled } from "@vicons/fluent";
 import { ref, inject } from "vue";
 const instance = ref();
 instance.value = inject("instance");
-
 // 设置鼠标悬停样式
 const hovercolor = ref(false);
+
 const overcolor = () => {
   hovercolor.value = true;
 };
@@ -13,9 +13,9 @@ const leavecolor = () => {
   hovercolor.value = false;
 };
 
-// 改变高亮颜色
+// 改变字体颜色
 const changeColor = (i: any) => {
-  instance.value.value.command.executeHighlight(i);
+  instance.value.value.command.executeColor(i);
 };
 </script>
 <template>
@@ -25,26 +25,9 @@ const changeColor = (i: any) => {
     icon-color="#000000"
     @mouseover="overcolor()"
     @mouseleave="leavecolor()"
-    style="position: relative; display: inline-block"
   >
-    <n-color-picker
-      class="mycolor"
-      size="small"
-      default-value="#F0A020"
-      :swatches="[
-        '#FFFFFF',
-        '#18A058',
-        '#2080F0',
-        '#F0A020',
-        'rgba(208, 48, 80, 1)',
-      ]"
-      @complete="changeColor"
-    />
-    <n-icon
-      class="mycoloricon"
-      size="16"
-      :component="TextClearFormatting20Filled"
-    />
+    <n-color-picker class="mycolor" size="small" @complete="changeColor" />
+    <n-icon class="mycoloricon" size="16" :component="TextEffects24Filled" />
   </n-icon-wrapper>
 </template>
 <style lang="less">
@@ -57,7 +40,7 @@ const changeColor = (i: any) => {
   z-index: 2;
 
   .n-color-picker-trigger {
-    border: 0px solid rgb(224, 224, 230);
+    border: 0px solid rgb(224, 224, 230) !important;
     height: 20px;
     top: 20px;
   }
@@ -67,11 +50,13 @@ const changeColor = (i: any) => {
     bottom: -11px;
   }
 }
-
+</style>
+<style lang="less" scoped>
 .mycoloricon {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 43px;
+  position: absolute !important;
+  left: 46% !important;
+  transform: translateX(40%) !important;
   z-index: 1;
 }
 </style>

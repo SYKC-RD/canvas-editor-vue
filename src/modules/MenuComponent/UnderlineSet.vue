@@ -21,7 +21,7 @@ const leavecolor = () => {
   hovercolor.value = false;
 };
 
-// 定义字体大小列表，包括显示名称和实际字号值
+// 定义下划线，包括显示名称和实际字号值
 const underLines = [
   { img: "images/line-single.svg", value: "solid" },
   { img: "images/line-double.svg", value: "double" },

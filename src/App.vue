@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import CanvasEditor from './components/CanvasEditor/index.vue'
+import CanvasEditor from "@/modules/index.vue";
 </script>
 
 <template>
-  <CanvasEditor  />
+  <CanvasEditor />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
