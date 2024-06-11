@@ -13,6 +13,10 @@ import {
   NDivider,
   NSelect,
   NColorPicker,
+  NUpload,
+  NPopover,
+  NModal,
+  NCard,
 } from "naive-ui";
 import "./style.css";
 import App from "./App.vue";
@@ -28,6 +32,10 @@ const naive = create({
     NDivider,
     NSelect,
     NColorPicker,
+    NUpload,
+    NPopover,
+    NModal,
+    NCard,
   ],
 });
 
