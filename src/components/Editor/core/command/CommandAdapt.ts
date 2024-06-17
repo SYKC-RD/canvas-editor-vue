@@ -2205,6 +2205,8 @@ export class CommandAdapt {
   }
 
   public insertElementList(payload: IElement[]) {
+    console.log(payload);
+
     if (!payload.length) return
     const isReadonly = this.draw.isReadonly()
     if (isReadonly) return

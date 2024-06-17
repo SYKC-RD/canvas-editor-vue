@@ -11,6 +11,13 @@ import AddTable from "./MenuComponent/AddTable.vue";
 import AddImage from "./MenuComponent/AddImage.vue";
 import AddHyperlink from "./MenuComponent/AddHyperlink.vue";
 import SetDivider from "./MenuComponent/SetDivider.vue";
+import SetWaterMark from "./MenuComponent/SetWaterMark.vue";
+import CodeBlock from "./MenuComponent/CodeBlock.vue";
+import LaTeX from "./MenuComponent/LateX.vue";
+import SetDate from "./MenuComponent/SetDate.vue";
+import blockDom from "./MenuComponent/blockDom.vue";
+import searchReplace from "./MenuComponent/searchReplace.vue";
+import SetControl from "./MenuComponent/SetControl.vue";
 import {
   ArrowReply16Regular,
   ArrowForward16Regular,
@@ -41,7 +48,7 @@ import {
   Print24Regular,
   TextAlignDistributedEvenly24Regular,
 } from "@vicons/fluent";
-
+import { ElementType}from '@/components/Editor'
 import { ref, inject } from "vue";
 // 注入全局instance
 const instance = ref();
@@ -145,24 +152,42 @@ instance.value = inject("instance");
     <AddImage />
     <AddHyperlink />
     <SetDivider />
-    <EditorIcon :iconProps="Xray24Regular" @editor="TextSubscript()" />
-    <EditorIcon :iconProps="Code24Regular" @editor="TextSubscript()" />
+    <SetWaterMark/>
+    <!-- <EditorIcon :iconProps="Xray24Regular" @editor="TextSubscript()" /> -->
+    <CodeBlock/>
     <EditorIcon :iconProps="DocumentText24Regular" @editor="TextSubscript()" />
-    <EditorIcon :iconProps="ControlButton24Regular" @editor="TextSubscript()" />
+    <SetControl/>
     <EditorIcon
       :iconProps="CheckboxChecked24Regular"
-      @editor="TextSubscript()"
+      :title="'复选框'"
+      @editor="instance.value.command.executeInsertElementList([
+      {
+        type: ElementType.CHECKBOX,
+        checkbox: {
+          value: false
+        },
+        value: ''
+      }
+    ])" 
     />
-    <EditorIcon :iconProps="RadioButton24Filled" @editor="TextSubscript()" />
-    <EditorIcon
-      :iconProps="BracesVariable24Regular"
-      @editor="TextSubscript()"
-    />
-    <EditorIcon :iconProps="Timer24Regular" @editor="TextSubscript()" />
-    <EditorIcon :iconProps="Organization24Regular" @editor="TextSubscript()" />
-
-    <EditorIcon :iconProps="Search24Regular" @editor="TextSubscript()" />
-    <EditorIcon :iconProps="Print24Regular" @editor="TextSubscript()" />
+    <EditorIcon 
+    :title="'单选框'"
+    :iconProps="RadioButton24Filled" 
+    @editor="instance.value.command.executeInsertElementList([
+      {
+        type:ElementType.RADIO,
+        checkbox: {
+          value: false
+        },
+        value: ''
+      }
+    ])"  />
+    <LaTeX/>
+    <SetDate/> 
+    <blockDom/>
+    <searchReplace/>
+    
+    <EditorIcon :title="'打印'" :iconProps="Print24Regular" @editor="instance.value.command.executePrint()" />
   </n-space>
 </template>
 

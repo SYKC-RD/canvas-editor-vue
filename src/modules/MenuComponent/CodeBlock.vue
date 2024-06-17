@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
-import { LineStyle24Regular } from "@vicons/fluent";
-
+import { Code24Regular } from "@vicons/fluent";
+import { Dialog } from "@/components/Dialog/Dialog";
+import prism from 'prismjs';
+import { formatPrismToken } from '@/utils/prism'
+import {IElement,  splitText }from '@/components/Editor'
 const instance = ref();
 instance.value = inject("instance");
 
@@ -10,7 +13,51 @@ const showOptions = ref(false);
 
 // 显示/隐藏选项菜单的方法
 const ShowOptions = () => {
+    new Dialog({
+      title: '代码块',
+      data: [
+        {
+          type: 'textarea',
+          name: 'codeblock',
+          placeholder: '请输入代码',
+          width: 500,
+          height: 300
+        }
+      ],
+      onConfirm: (payload: any[]) => {
+        const codeblock = payload.find(p => p.name === 'codeblock')?.value
+        if (!codeblock) return
+        const tokenList = prism.tokenize(codeblock, prism.languages.javascript)
+        const formatTokenList = formatPrismToken(tokenList)
+        const elementList: IElement[] = []
+        for (let i = 0; i < formatTokenList.length; i++) {
+          const formatToken = formatTokenList[i]
+          const tokenStringList = splitText(formatToken.content)
+          for (let j = 0; j < tokenStringList.length; j++) {
+            const value = tokenStringList[j]
+            const element: IElement = {
+              value
+            }
+            if (formatToken.color) {
+              element.color = formatToken.color
+            }
+            if (formatToken.bold) {
+              element.bold = true
+            }
+            if (formatToken.italic) {
+              element.italic = true
+            }
+            elementList.push(element)
+          }
+        }
+        elementList.unshift({
+          value: '\n'
+        })
+        instance.value.value.command.executeInsertElementList(elementList)
+      }
+    })
   showOptions.value = !showOptions.value;
+
 };
 
 // 设置鼠标悬停样式
@@ -22,33 +69,7 @@ const leavecolor = () => {
   hovercolor.value = false;
 };
 
-// 定义分割线列表
-const dividers = [
-  { img: "images/line-single.svg", value: "0,0" },
-  { img: "images/line-dot.svg", value: "1,1" },
-  { img: "images/line-dash-small-gap.svg", value: "3,1" },
-  { img: "images/line-dash-large-gap.svg", value: "4,4" },
-  { img: "images/line-dash-dot.svg", value: "7,3,3,3" },
-  { img: "images/line-dash-dot-dot.svg", value: "6,2,2,2,2,2" },
-];
 
-// 设置分割线
-const SetDivider = (item: any) => {
-  console.log(item);
-    let payload: number[] = []
-    const separatorDash = item.value.split(',').map(Number)
-    console.log(separatorDash);
-    if (separatorDash) {
-      const isSingleLine  = separatorDash.every(d => d === 0)
-      if (!isSingleLine) {
-        payload = separatorDash
-      }
-    }
-
-    
-    instance.value.value.command.executeSeparator(payload)
-    showOptions.value = !showOptions.value;
-};
 </script>
 <template>
   <div class="menu-item">
@@ -62,16 +83,12 @@ const SetDivider = (item: any) => {
           @mouseleave="leavecolor()"
           @click="ShowOptions()"
         >
-          <n-icon size="18" :component="LineStyle24Regular" />
+          <n-icon size="18" :component="Code24Regular" />
         </n-icon-wrapper>
       </template>
-      <span> 分割线 </span>
+      <span> 代码块</span>
     </n-popover>
-    <div class="options" v-if="showOptions">
-      <li v-for="(item, index) in dividers" :key="index">
-        <img :src="item.img" @click="SetDivider(item)" />
-      </li>
-    </div>
+   
   </div>
 </template>
 <style lang="less" scoped>

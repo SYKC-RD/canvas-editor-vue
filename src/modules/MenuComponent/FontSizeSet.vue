@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
+import EditorSelect from "../../components/EditorSelect/index.vue";
 const instance = ref();
 instance.value = inject("instance");
 
@@ -45,7 +46,7 @@ const SetFontSize = (i: any) => {
       defaultOptions
     }}</span>
     <div class="options" v-if="showOptions">
-      <li
+      <!-- <li
         v-for="(size, index) in fontSizes"
         :key="index"
         @click="SetFontSize(size)"
@@ -56,7 +57,8 @@ const SetFontSize = (i: any) => {
         "
       >
         {{ size.name }}
-      </li>
+      </li> -->
+    <EditorSelect :setClick="SetFontSize" :option="fontSizes" :selectedItem="defaultOptions"/>
     </div>
   </div>
 </template>
@@ -100,20 +102,6 @@ const SetFontSize = (i: any) => {
   display: block;
   z-index: 99;
 
-  li {
-    padding: 5px;
-    margin: 5px 0;
-    user-select: none;
-    transition: all 0.3s;
-    list-style: none;
-  }
 
-  li:hover {
-    background-color: #ebecef;
-  }
-
-  li.active {
-    background-color: #e2e6ed;
-  }
 }
 </style>

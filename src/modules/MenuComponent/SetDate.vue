@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
-import { LineStyle24Regular } from "@vicons/fluent";
-
+import { Timer24Regular } from "@vicons/fluent";
+import { ElementType } from "@/components/Editor";
 const instance = ref();
 instance.value = inject("instance");
 
@@ -10,9 +10,48 @@ const showOptions = ref(false);
 
 // 显示/隐藏选项菜单的方法
 const ShowOptions = () => {
+  const date = new Date();
+  const year = date.getFullYear().toString();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const hour = date.getHours().toString().padStart(2, "0");
+  const minute = date.getMinutes().toString().padStart(2, "0");
+  const second = date.getSeconds().toString().padStart(2, "0");
+  dateString.value = `${year}-${month}-${day}`;
+  dateTimeString.value = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
   showOptions.value = !showOptions.value;
 };
-
+const SetDate = (a: any) => {
+if(a=='yyyy-MM-dd'){
+    instance.value.value.command.executeInsertElementList([
+      {
+        type: ElementType.DATE,
+        value: '',
+        a,
+        valueList: [
+          {
+            value: dateString.value.trim()
+          }
+        ]
+      }
+    ])
+}
+else{
+    instance.value.value.command.executeInsertElementList([
+      {
+        type: ElementType.DATE,
+        value: '',
+        a,
+        valueList: [
+          {
+            value: dateTimeString.value.trim()
+          }
+        ]
+      }
+    ])
+}
+showOptions.value = !showOptions.value;
+}
 // 设置鼠标悬停样式
 const hovercolor = ref(false);
 const overcolor = () => {
@@ -21,34 +60,8 @@ const overcolor = () => {
 const leavecolor = () => {
   hovercolor.value = false;
 };
-
-// 定义分割线列表
-const dividers = [
-  { img: "images/line-single.svg", value: "0,0" },
-  { img: "images/line-dot.svg", value: "1,1" },
-  { img: "images/line-dash-small-gap.svg", value: "3,1" },
-  { img: "images/line-dash-large-gap.svg", value: "4,4" },
-  { img: "images/line-dash-dot.svg", value: "7,3,3,3" },
-  { img: "images/line-dash-dot-dot.svg", value: "6,2,2,2,2,2" },
-];
-
-// 设置分割线
-const SetDivider = (item: any) => {
-  console.log(item);
-    let payload: number[] = []
-    const separatorDash = item.value.split(',').map(Number)
-    console.log(separatorDash);
-    if (separatorDash) {
-      const isSingleLine  = separatorDash.every(d => d === 0)
-      if (!isSingleLine) {
-        payload = separatorDash
-      }
-    }
-
-    
-    instance.value.value.command.executeSeparator(payload)
-    showOptions.value = !showOptions.value;
-};
+const dateString = ref("");
+const dateTimeString = ref("");
 </script>
 <template>
   <div class="menu-item">
@@ -62,15 +75,14 @@ const SetDivider = (item: any) => {
           @mouseleave="leavecolor()"
           @click="ShowOptions()"
         >
-          <n-icon size="18" :component="LineStyle24Regular" />
+          <n-icon size="18" :component="Timer24Regular" />
         </n-icon-wrapper>
       </template>
-      <span> 分割线 </span>
+      <span>日期</span>
     </n-popover>
     <div class="options" v-if="showOptions">
-      <li v-for="(item, index) in dividers" :key="index">
-        <img :src="item.img" @click="SetDivider(item)" />
-      </li>
+      <li @click="SetDate('yyyy-MM-dd')">{{ dateString }}</li>
+      <li @click="SetDate('yyyy-MM-dd hh:mm:ss')">{{ dateTimeString }}</li>
     </div>
   </div>
 </template>

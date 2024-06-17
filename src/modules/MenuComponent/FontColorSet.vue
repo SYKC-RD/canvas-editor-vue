@@ -52,11 +52,11 @@ const changeColor = (i: any) => {
 }
 </style>
 <style lang="less" scoped>
-.mycoloricon {
-  top: 43px;
-  position: absolute !important;
-  left: 46% !important;
-  transform: translateX(40%) !important;
-  z-index: 1;
-}
+// .mycoloricon {
+//   top: 43px;
+//   position: absolute !important;
+//   left: 46% !important;
+//   transform: translateX(40%) !important;
+//   z-index: 1;
+// }
 </style>

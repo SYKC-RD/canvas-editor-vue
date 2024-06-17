@@ -579,6 +579,8 @@ export class Draw {
   }
 
   public insertElementList(payload: IElement[]) {
+    console.log(payload);
+  
     if (!payload.length || !this.range.getIsCanInput()) return;
     const { startIndex, endIndex } = this.range.getRange();
     if (!~startIndex && !~endIndex) return;
