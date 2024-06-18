@@ -1,6 +1,6 @@
 <template>
   <div v-show="showCatalog" class="catalog" editor-component="catalog">
-    <div  class="catalog__header">
+    <div class="catalog__header">
       <span>目录</span>
       <div @click="closeCatalog()" class="catalog__header__close">
         <i></i>
@@ -10,74 +10,72 @@
   </div>
   <div class="footer" editor-component="footer">
     <div>
-      <div
-        @click="switchlog()"
-        
-        class="catalog-mode"
-        title="目录"
-      >
+      <div @click="switchlog()" class="catalog-mode" title="目录">
         <i></i>
       </div>
-      <div @click="clickPage()" class="page-mode">
+      <div style="position: relative" @click="clickPage()" class="page-mode">
         <i title="页面模式(分页、连页)"></i>
-        <div v-if="showOptions" class="options">
+        <div v-if="showOptions" class="option">
           <ul>
-            <li data-page-mode="paging" class="active">分页</li>
-            <li data-page-mode="continuity">连页</li>
+            <li @click="clickPagemode('paging')" class="active">分页</li>
+            <li @click="clickPagemode('continuity')">连页</li>
           </ul>
         </div>
       </div>
-      <span>可见页码：<span class="page-no-list">1</span></span>
       <span
-        >页面：<span class="page-no">1</span>/<span class="page-size"
-          >1</span
-        ></span
+        >可见页码：<span class="page-no-list">
+          {{ pageList }}
+        </span></span
       >
-      <span>字数：<span class="word-count">0</span></span>
+      <span
+        >页面：<span class="page-no">{{ PageNumber }}</span
+        >/<span class="page-size">{{ pageSizenum }}</span></span
+      >
+      <span>字数：<span class="word-count">{{ wordNum }}</span></span>
     </div>
-    <div class="editor-mode" title="编辑模式(编辑、清洁、只读、表单)">
-      编辑模式
-    </div>
+    <!-- <div class="editor-mode" title="编辑模式(编辑、清洁、只读、表单)">
+     {{ modeType }}
+    </div> -->
     <div>
-      <div class="page-scale-minus" title="缩小(Ctrl+-)">
+      <div @click="scaleMin()" class="page-scale-minus" title="缩小(Ctrl+-)">
         <i></i>
       </div>
-      <span class="page-scale-percentage" title="显示比例(点击可复原Ctrl+0)"
-        >100%</span
+      <span
+        @click="pageScale()"
+        class="page-scale-percentage"
+        title="显示比例(点击可复原Ctrl+0)"
+        >{{ percentage }}%</span
       >
-      <div class="page-scale-add" title="放大(Ctrl+=)">
+      <div @click="scaleMax()" class="page-scale-add" title="放大(Ctrl+=)">
         <i></i>
       </div>
-      <div class="paper-size">
+      <div class="paper-size" @click="pageSize()">
         <i title="纸张类型"></i>
-        <div class="options">
+        <div v-if="showOptions" class="option">
           <ul>
-            <li data-paper-size="794*1123" class="active">A4</li>
-            <li data-paper-size="1593*2251">A2</li>
-            <li data-paper-size="1125*1593">A3</li>
-            <li data-paper-size="565*796">A5</li>
-            <li data-paper-size="412*488">5号信封</li>
-            <li data-paper-size="450*866">6号信封</li>
-            <li data-paper-size="609*862">7号信封</li>
-            <li data-paper-size="862*1221">9号信封</li>
-            <li data-paper-size="813*1266">法律用纸</li>
-            <li data-paper-size="813*1054">信纸</li>
+            <li
+              v-for="(item, index) in papersize"
+              @click="clickPagesize(item)"
+              :key="index"
+            >
+              {{ item.name }}
+            </li>
           </ul>
         </div>
       </div>
-      <div class="paper-direction">
+      <div @click="clickDict()" class="paper-direction">
         <i title="纸张方向"></i>
-        <div class="options">
+        <div v-if="showdict" class="option">
           <ul>
-            <li data-paper-direction="vertical" class="active">纵向</li>
-            <li data-paper-direction="horizontal">横向</li>
+            <li @click="paperDict('vertical')">纵向</li>
+            <li @click="paperDict('horizontal')">横向</li>
           </ul>
         </div>
       </div>
-      <div class="paper-margin" title="页边距">
+      <div @click="paparMargin()" class="paper-margin" title="页边距">
         <i></i>
       </div>
-      <div class="fullscreen" title="全屏显示">
+      <div @click="fullScreen()" class="fullscreen" title="全屏显示">
         <i></i>
       </div>
       <div @click="editConfig()" class="editor-option" title="编辑器设置">
@@ -90,11 +88,33 @@
 import { ref, inject } from "vue";
 import { Dialog } from "@/components/Dialog/Dialog";
 import { ICatalogItem } from "@/components/Editor";
+import { nextTick } from "vue";
+import { debounce } from '@/utils/index'
 // 注入全局instance
 const instance = ref();
 instance.value = inject("instance");
 const showCatalog = ref(false);
 const showOptions = ref(false);
+const showdict = ref(false);
+const showSize = ref(false);
+const percentage = ref(100);
+const PageNumber = ref(1);
+const pageList = ref(1);
+const pageSizenum = ref(1);
+const wordNum = ref(0)
+const papersize = [
+  { name: "A4", value: "794*1123" },
+  { name: "A2", value: "1593*2251" },
+  { name: "A3", value: "1125*1593" },
+  { name: "A5", value: "565*796" },
+  { name: "5号信封", value: "412*488" },
+  { name: "6号信封", value: "450*866" },
+  { name: "7号信封", value: "609*862" },
+  { name: "9号信封", value: "862*1221" },
+  { name: "法律用纸", value: "813*1266" },
+  { name: "信纸", value: "813*1054" },
+];
+// const modeType = ref('编辑模式')
 const editConfig = () => {
   const options = instance.value.value.command.getOptions();
   new Dialog({
@@ -120,11 +140,9 @@ const editConfig = () => {
 };
 async function updateCatalog() {
   const catalog = await instance.value.value.command.getCatalog();
-  console.log(catalog);
-
   const catalogMainDom =
     document.querySelector<HTMLDivElement>(".catalog__main")!;
-   catalogMainDom.innerHTML = ''
+  catalogMainDom.innerHTML = "";
   if (catalog) {
     const appendCatalog = (
       parent: HTMLDivElement,
@@ -164,14 +182,141 @@ const switchlog = () => {
     updateCatalog();
   }
 };
-const closeCatalog=()=>{
-  switchlog()
-}
-const clickPage=()=>{
+const closeCatalog = () => {
+  switchlog();
+};
+const clickPage = () => {
+  showOptions.value = !showOptions.value;
+};
+const clickPagemode = (type: any) => {
+  instance.value.value.command.executePageMode(type);
+};
+const pageScale = () => {
+  instance.value.value.command.executePageScaleRecovery();
+};
+instance.value.value.listener.pageScaleChange = function (payload: any) {
+  percentage.value = Math.floor(payload * 10 * 10);
+};
+instance.value.value.listener.intersectionPageNoChange = function (
+  payload: any
+) {
+  PageNumber.value = payload + 1;
+};
+instance.value.value.listener.visiblePageNoListChange = function (
+  payload: any
+) {
+  const text = payload.map((i) => i + 1).join("、");
+  console.log(text);
   
+  pageList.value = text;
+};
+instance.value.value.listener.pageSizeChange = function (payload: any) {
+  pageSizenum.value = payload;
+};
+
+const handleContentChange = async function () {
+    // 字数
+    const wordCount = await instance.value.value.command.getWordCount()
+   wordNum.value  =  wordCount || 0
+   console.log(wordCount);
+   
+    // 目录
+    if (showCatalog) {
+      nextTick(() => {
+        updateCatalog()
+      })
+    }
+  }
+  instance.value.value.listener.contentChange = debounce(handleContentChange, 200)
+  handleContentChange()
+const scaleMin = () => {
+  instance.value.value.command.executePageScaleMinus();
+};
+const scaleMax = () => {
+  instance.value.value.command.executePageScaleAdd();
+};
+const fullScreen = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+};
+const pageSize = () => {
+  showSize.value = !showSize.value;
+};
+const clickPagesize = (item: any) => {
+  const paperType = item.value;
+  const [width, height] = paperType.split("*").map(Number);
+  instance.value.value.command.executePaperSize(width, height);
+};
+//纸张方向
+const clickDict = () => {
+  showdict.value = !showdict.value;
+};
+const paperDict = (item: any) => {
+  instance.value.value.command.executePaperDirection(item);
+};
+//頁邊距
+const paparMargin=()=>{
+  const [topMargin, rightMargin, bottomMargin, leftMargin] =
+      instance.value.value.command.getPaperMargin()
+    new Dialog({
+      title: '页边距',
+      data: [
+        {
+          type: 'text',
+          label: '上边距',
+          name: 'top',
+          required: true,
+          value: `${topMargin}`,
+          placeholder: '请输入上边距'
+        },
+        {
+          type: 'text',
+          label: '下边距',
+          name: 'bottom',
+          required: true,
+          value: `${bottomMargin}`,
+          placeholder: '请输入下边距'
+        },
+        {
+          type: 'text',
+          label: '左边距',
+          name: 'left',
+          required: true,
+          value: `${leftMargin}`,
+          placeholder: '请输入左边距'
+        },
+        {
+          type: 'text',
+          label: '右边距',
+          name: 'right',
+          required: true,
+          value: `${rightMargin}`,
+          placeholder: '请输入右边距'
+        }
+      ],
+      onConfirm: (payload: any[]) => {
+        const top = payload.find(p => p.name === 'top')?.value
+        if (!top) return
+        const bottom = payload.find(p => p.name === 'bottom')?.value
+        if (!bottom) return
+        const left = payload.find(p => p.name === 'left')?.value
+        if (!left) return
+        const right = payload.find(p => p.name === 'right')?.value
+        if (!right) return
+        instance.value.value.command.executeSetPaperMargin([
+          Number(top),
+          Number(right),
+          Number(bottom),
+          Number(left)
+        ])
+      }
+    })
 }
 </script>
-<style>
+<style lang="less">
 .catalog {
   width: 250px;
   position: fixed;
@@ -395,5 +540,36 @@ const clickPage=()=>{
 
 .ce-contextmenu-word-tool {
   background-image: url("@ /assets/images/word-tool.svg");
+}
+.option {
+  width: 80px;
+  position: absolute;
+  left: 0;
+  bottom: 25px;
+  padding: 10px;
+  background: #fff;
+  font-size: 14px;
+  box-shadow: 0 2px 12px 0 rgb(56 56 56 / 20%);
+  border: 1px solid #e2e6ed;
+  border-radius: 2px;
+  display: block;
+  z-index: 99;
+  ul {
+    position: relative;
+    left: -45px;
+    width: 100%;
+  }
+  li {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    user-select: none;
+    transition: all 0.3s;
+    list-style: none;
+  }
+
+  li:hover {
+    background-color: #ebecef;
+  }
 }
 </style>
