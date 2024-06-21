@@ -194,25 +194,25 @@ const clickPagemode = (type: any) => {
 const pageScale = () => {
   instance.value.value.command.executePageScaleRecovery();
 };
-instance.value.value.listener.pageScaleChange = function (payload: any) {
-  percentage.value = Math.floor(payload * 10 * 10);
-};
-instance.value.value.listener.intersectionPageNoChange = function (
-  payload: any
-) {
-  PageNumber.value = payload + 1;
-};
-instance.value.value.listener.visiblePageNoListChange = function (
-  payload: any
-) {
-  const text = payload.map((i) => i + 1).join("、");
-  console.log(text);
+// instance.value.value.listener.pageScaleChange = function (payload: any) {
+//   percentage.value = Math.floor(payload * 10 * 10);
+// };
+// instance.value.value.listener.intersectionPageNoChange = function (
+//   payload: any
+// ) {
+//   PageNumber.value = payload + 1;
+// };
+// instance.value.value.listener.visiblePageNoListChange = function (
+//   payload: any
+// ) {
+//   const text = payload.map((i) => i + 1).join("、");
+//   console.log(text);
   
-  pageList.value = text;
-};
-instance.value.value.listener.pageSizeChange = function (payload: any) {
-  pageSizenum.value = payload;
-};
+//   pageList.value = text;
+// };
+// instance.value.value.listener.pageSizeChange = function (payload: any) {
+//   pageSizenum.value = payload;
+// };
 
 const handleContentChange = async function () {
     // 字数
@@ -227,7 +227,7 @@ const handleContentChange = async function () {
       })
     }
   }
-  instance.value.value.listener.contentChange = debounce(handleContentChange, 200)
+  // instance.value.value.listener.contentChange = debounce(handleContentChange, 200)
   handleContentChange()
 const scaleMin = () => {
   instance.value.value.command.executePageScaleMinus();

@@ -147,7 +147,7 @@ instance.value = inject("instance");
     <SetWaterMark/>
     <!-- <EditorIcon :iconProps="Xray24Regular" @editor="TextSubscript()" /> -->
     <CodeBlock/>
-    <EditorIcon :iconProps="DocumentText24Regular" @editor="TextSubscript()" />
+    <EditorIcon :title="'分页符'" :iconProps="DocumentText24Regular" @editor=" instance.value.command.executePageBreak()" />
     <SetControl/>
     <EditorIcon
       :iconProps="CheckboxChecked24Regular"
